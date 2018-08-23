@@ -1,5 +1,5 @@
 def prompt(message)
-  Kernel.puts("=> #{message}")
+  puts("=> #{message}")
 end
 
 def valid_number?(num)
@@ -19,7 +19,7 @@ prompt("Welcome to Calculator! Enter your name: ")
 
 name = nil
 loop do
-  name = Kernel.gets.chomp
+  name = gets.chomp
 
   if name.empty?
     prompt("Make sure to use a valid name.")
@@ -36,7 +36,7 @@ loop do
   number1 = nil
   loop do
     prompt("What's the first number?")
-    number1 = Kernel.gets.chomp
+    number1 = gets.chomp
 
     if valid_number?(number1)
       break
@@ -48,7 +48,7 @@ loop do
   number2 = nil
   loop do
     prompt("What's the second number?")
-    number2 = Kernel.gets.chomp
+    number2 = gets.chomp
 
     if valid_number?(number2)
       break
@@ -70,7 +70,7 @@ loop do
 
   operator = nil
   loop do
-    operator = Kernel.gets.chomp
+    operator = gets.chomp
 
     break if %w(1 2 3 4).include?(operator)
     prompt("Must choose 1, 2, 3 or 4")
@@ -88,7 +88,7 @@ loop do
   prompt("The result is #{result}")
 
   prompt("Do you want to perform another calculation? (Y to calculate again)")
-  answer = Kernel.gets.chomp
+  answer = gets.chomp
   break unless answer.downcase.start_with?("y")
 end
 

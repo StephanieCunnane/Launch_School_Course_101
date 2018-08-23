@@ -32,7 +32,6 @@ prompt("Hi, #{name}!")
 
 # main loop
 loop do
-
   number1 = nil
   loop do
     prompt("What's the first number?")

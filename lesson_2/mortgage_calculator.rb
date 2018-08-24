@@ -3,10 +3,6 @@ def prompt(message)
 end
 
 def valid_number?(num)
-  /^\d+$/.match(num)
-end
-
-def valid_apr?(num)
   /(^[0-9]+\.[0-9]+$|^[0-9]+$)/.match(num)
 end
 
@@ -31,7 +27,7 @@ loop do
     prompt("What is the APR? (ex: 7.5 for 7.5%)")
     apr = gets.chomp
 
-    if valid_apr?(apr)
+    if valid_number?(apr)
       apr = apr.to_f * 0.01
       break
     end

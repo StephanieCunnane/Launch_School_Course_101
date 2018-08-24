@@ -64,10 +64,10 @@ loop do
   loop do
     prompt("Do you need to calculate another monthly payment? (Y or N)")
     answer = gets.chomp.downcase
-    break if answer.start_with?("y", "n")
+    break if %w(y n yes no).include?(answer)
     prompt("Please answer with Y or N")
   end
-  break unless answer.start_with?("y")
+  break unless %w(y yes).include?(answer)
 end
 
 prompt("Thank you for using the Mortgage Calculator. Goodbye!")

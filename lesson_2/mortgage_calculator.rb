@@ -14,7 +14,7 @@ loop do
     prompt("What is the loan amount?")
     loan_amount = gets.chomp
 
-    if valid_number?(loan_amount)
+    if valid_number?(loan_amount) && loan_amount.to_f > 0
       loan_amount = loan_amount.to_i
       break
     end

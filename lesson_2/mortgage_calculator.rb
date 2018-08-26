@@ -55,12 +55,12 @@ loop do
   monthly_interest_rate = apr / 12
   loan_duration_months = loan_duration_years * 12
 
-  if monthly_interest_rate == 0
-    monthly_payment = loan_amount.to_f / loan_duration_months
-  else
-    monthly_payment = loan_amount * (monthly_interest_rate /
+  monthly_payment = if monthly_interest_rate == 0
+                      loan_amount.to_f / loan_duration_months
+                    else
+                      loan_amount * (monthly_interest_rate /
                       (1 - (1 + monthly_interest_rate)**-loan_duration_months))
-  end
+                    end
 
   prompt("Your monthly payment will be $#{format('%02.2f', monthly_payment)}.")
 

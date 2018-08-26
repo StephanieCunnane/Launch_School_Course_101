@@ -6,6 +6,10 @@ def valid_number?(num)
   /(^[0-9]+\.[0-9]+$|^[0-9]+$)/.match(num)
 end
 
+def clear_screen
+  system('clear') || system('cls')
+end
+
 prompt("Welcome to the Mortgage Calculator!")
 
 loop do
@@ -67,7 +71,12 @@ loop do
     break if %w(y n yes no).include?(answer)
     prompt("Please answer with Y or N")
   end
-  break unless %w(y yes).include?(answer)
+
+  if %w(y yes).include?(answer)
+    clear_screen
+  else
+    break
+  end
 end
 
 prompt("Thank you for using the Mortgage Calculator. Goodbye!")

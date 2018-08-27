@@ -53,7 +53,7 @@ def queens_can_attack?(pos1, pos2)
   return true if pos1[0] == pos2[0] || pos1[1] == pos2[1]
   row_difference = pos1[0] - pos2[0]
   column_difference = pos1[1] - pos2[1]
-  return row_difference == column_difference
+  row_difference == column_difference
 end
 
 queen1_pos =  get_coordinates(CHESS_BOARD)[0..1]

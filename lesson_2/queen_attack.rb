@@ -59,4 +59,4 @@ end
 queen1_pos =  get_coordinates(CHESS_BOARD)[0..1]
 queen2_pos =  get_coordinates(CHESS_BOARD)[2..3]
 
-p queens_can_attack?(queen1_pos, queen2_pos)
+puts queens_can_attack?(queen1_pos, queen2_pos)

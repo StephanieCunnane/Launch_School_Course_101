@@ -1,21 +1,22 @@
-VALID_CHOICES = ["rock", "paper", "scissors"]
+VALID_CHOICES = %w(rock paper scissors)
 
 def prompt(message)
   puts "=> #{message}"
 end
 
-def display_results(player, computer)
-  player_wins = "You won!"
-  computer_wins = "Computer won!"
+def win?(first, second)
+  (first == 'rock' && second == 'scissors') ||
+    (first == 'paper' && second == 'rock') ||
+    (first == 'scissors' && second == 'paper')
+end
 
-  case [player, computer]
-  when ['rock', 'scissors'] then player_wins
-  when ['paper', 'rock'] then player_wins
-  when ['scissors', 'paper'] then player_wins
-  when ['rock', 'paper'] then computer_wins
-  when ['paper', 'scissors'] then computer_wins
-  when ['scissors', 'rock'] then computer_wins
-  else "It's a tie!"
+def display_results(player, computer)
+  if win?(player, computer)
+    prompt("You won!")
+  elsif win?(computer, player)
+    prompt("Computer won!")
+  else
+    prompt("It's a tie!")
   end
 end
 
@@ -32,7 +33,7 @@ loop do
 
   puts "You chose: #{choice}; computer chose: #{computer_choice}."
 
-  puts display_results(choice, computer_choice)
+  display_results(choice, computer_choice)
 
   answer = nil
   loop do

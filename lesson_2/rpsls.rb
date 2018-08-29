@@ -90,11 +90,8 @@ loop do
     prompt("That's not a valid choice.")
   end
 
-  if %w(y yes).include?(answer)
-    clear_screen
-  else
-    break
-  end
+  break unless %w(y yes).include?(answer)
+  clear_screen()
 end
 
 prompt("Thank you for playing Rock Paper Scissors Lizard Spock. Goodbye!")

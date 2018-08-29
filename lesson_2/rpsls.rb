@@ -13,6 +13,7 @@ WINNING_MOVES = {
   "lizard"   => ["paper", "spock"],
   "spock"    => ["scissors", "rock"]
 }
+WINNING_SCORE = 5
 
 player_points = 0
 computer_points = 0
@@ -40,14 +41,14 @@ def display_results(player, computer)
 end
 
 def announce_grand_winner(player_points)
-  grand_winner = player_points == 5 ? "Player" : "Computer"
+  grand_winner = player_points == WINNING_SCORE ? "Player" : "Computer"
   prompt("----------------------------------------------------")
   prompt("The match is over. #{grand_winner} is the grand winner!!")
 end
 
 prompt("----------------------------------------------------")
 prompt("Welcome to Rock Paper Scissors Lizard Spock!")
-prompt("The first player to 5 points wins the overall match.")
+prompt("The first player to #{WINNING_SCORE} points wins the overall match.")
 prompt("----------------------------------------------------")
 
 loop do
@@ -75,7 +76,7 @@ loop do
   prompt("So far, player points: #{player_points}," \
          " computer points: #{computer_points}")
 
-  if player_points == 5 || computer_points == 5
+  if player_points == WINNING_SCORE || computer_points == WINNING_SCORE
     announce_grand_winner(player_points)
     break
   end

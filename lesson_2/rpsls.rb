@@ -25,8 +25,8 @@ def clear_screen
   system('clear') || system('cls')
 end
 
-def win?(first, second)
-  WINNING_MOVES[first].include?(second)
+def win?(choice1, choice2)
+  WINNING_MOVES[choice1].include?(choice2)
 end
 
 def display_results(player, computer)
@@ -70,9 +70,11 @@ loop do
          " computer points: #{computer_points}")
 
   if player_points == 5
+    prompt("----------------------------------------------------")
     prompt("The match is over. You are the grand winner!!")
     break
   elsif computer_points == 5
+    prompt("----------------------------------------------------")
     prompt("The match is over. Computer is the grand winner!!")
     break
   end

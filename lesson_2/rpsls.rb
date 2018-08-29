@@ -40,12 +40,6 @@ def display_results(player, computer)
   end
 end
 
-def announce_grand_winner(player_points)
-  grand_winner = player_points == WINNING_SCORE ? "Player" : "Computer"
-  prompt("----------------------------------------------------")
-  prompt("The match is over. #{grand_winner} is the grand winner!!")
-end
-
 prompt("----------------------------------------------------")
 prompt("Welcome to Rock Paper Scissors Lizard Spock!")
 prompt("The first player to #{WINNING_SCORE} points wins the overall match.")
@@ -78,7 +72,9 @@ loop do
          " computer points: #{computer_points}")
 
   if player_points == WINNING_SCORE || computer_points == WINNING_SCORE
-    announce_grand_winner(player_points)
+    grand_winner = player_points == WINNING_SCORE ? "Player" : "Computer"
+    prompt("----------------------------------------------------")
+    prompt("The match is over. #{grand_winner} is the grand winner!!")
     break
   end
 

@@ -50,25 +50,25 @@ end
 display_welcome()
 
 loop do
-  choice = nil
+  player_choice = nil
   loop do
     prompt("Choose one: #{VALID_CHOICES.join(', ')}")
     prompt("(Or just type 'r', 'p', 'sc', 'l' or 'sp')")
-    choice = gets.chomp.downcase
-    choice = ABBREVIATIONS[choice] if ABBREVIATIONS[choice]
-    break if VALID_CHOICES.include?(choice)
+    player_choice = gets.chomp.downcase
+    player_choice = ABBREVIATIONS[player_choice] if ABBREVIATIONS[player_choice]
+    break if VALID_CHOICES.include?(player_choice)
     prompt("That's not a valid choice.")
   end
 
   computer_choice = VALID_CHOICES.sample
 
-  prompt("You chose: #{choice}, computer chose: #{computer_choice}")
+  prompt("You chose: #{player_choice}, computer chose: #{computer_choice}")
 
-  display_results(choice, computer_choice)
+  display_results(player_choice, computer_choice)
 
-  if win?(choice, computer_choice)
+  if win?(player_choice, computer_choice)
     player_points += 1
-  elsif win?(computer_choice, choice)
+  elsif win?(computer_choice, player_choice)
     computer_points += 1
   end
 

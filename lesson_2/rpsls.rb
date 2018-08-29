@@ -14,8 +14,8 @@ WINNING_MOVES = {
   "spock"    => ["scissors", "rock"]
 }
 
-player_win_count = 0
-computer_win_count = 0
+player_points = 0
+computer_points = 0
 
 def prompt(message)
   puts "=> #{message}"
@@ -39,6 +39,11 @@ def display_results(player, computer)
   end
 end
 
+prompt("----------------------------------------------------")
+prompt("Welcome to Rock Paper Scissors Lizard Spock!")
+prompt("The first player to 5 points wins the overall match.")
+prompt("----------------------------------------------------")
+
 loop do
   choice = nil
   loop do
@@ -51,24 +56,24 @@ loop do
 
   computer_choice = VALID_CHOICES.sample
 
-  puts "You chose: #{choice}; computer chose: #{computer_choice}."
+  prompt("You chose: #{choice}, computer chose: #{computer_choice}")
 
   display_results(choice, computer_choice)
 
   if win?(choice, computer_choice)
-    player_win_count += 1
+    player_points += 1
   elsif win?(computer_choice, choice)
-    computer_win_count += 1
+    computer_points += 1
   end
 
-  prompt("So far, player wins: #{player_win_count}," \
-         " computer wins: #{computer_win_count}")
+  prompt("So far, player points: #{player_points}," \
+         " computer points: #{computer_points}")
 
-  if player_win_count == 5
-    prompt("Match is over. Player is the grand winner!!")
+  if player_points == 5
+    prompt("The match is over. You are the grand winner!!")
     break
-  elsif computer_win_count == 5
-    prompt("Match is over. Computer is the grand winner!!")
+  elsif computer_points == 5
+    prompt("The match is over. Computer is the grand winner!!")
     break
   end
 
@@ -87,4 +92,4 @@ loop do
   end
 end
 
-prompt("Thank you for playing. Goodbye!")
+prompt("Thank you for playing Rock Paper Scissors Lizard Spock. Goodbye!")

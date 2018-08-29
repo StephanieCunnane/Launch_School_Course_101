@@ -55,6 +55,7 @@ loop do
   choice = nil
   loop do
     prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+    prompt("(Or just type 'r', 'p', 'sc', 'l' or 'sp')")
     choice = gets.chomp.downcase
     choice = ABBREVIATIONS[choice] if ABBREVIATIONS[choice]
     break if VALID_CHOICES.include?(choice)

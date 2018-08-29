@@ -22,6 +22,13 @@ def prompt(message)
   puts "=> #{message}"
 end
 
+def display_welcome
+  prompt("----------------------------------------------------")
+  prompt("Welcome to Rock Paper Scissors Lizard Spock!")
+  prompt("The first player to #{WINNING_SCORE} points wins the overall match.")
+  prompt("----------------------------------------------------")
+end
+
 def clear_screen
   system('clear') || system('cls')
 end
@@ -40,10 +47,7 @@ def display_results(player, computer)
   end
 end
 
-prompt("----------------------------------------------------")
-prompt("Welcome to Rock Paper Scissors Lizard Spock!")
-prompt("The first player to #{WINNING_SCORE} points wins the overall match.")
-prompt("----------------------------------------------------")
+display_welcome()
 
 loop do
   choice = nil

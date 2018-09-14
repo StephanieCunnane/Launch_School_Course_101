@@ -152,3 +152,44 @@ hsh.each do |_, value|
     end
   end
 end
+
+############################################################
+# 9
+
+# Return a new array of the same structure but with the sub arrays being ordered
+# (alphabetically or numerically as appropriate) in descending order
+
+arr = [['b', 'c', 'a'], [2, 1, 3], ['blue', 'black', 'green']]
+
+result = arr.map do |sub_arr|
+           sub_arr.sort { |a, b| b <=> a }
+         end
+
+############################################################
+# 10
+
+# Given the following data structure and without modifying the original array,
+# use the map method to return a new array identical in structure to the
+# original but where the value of each integer is incremented by 1.
+arr = [{a: 1}, {b: 2, c: 3}, {d: 4, e: 5, f: 6}]
+
+result = arr.map do |hsh|
+  keys = hsh.keys
+  values = hsh.values.map(&:next)
+  keys.zip(values).to_h
+end
+
+puts "result:"
+p result
+puts "original array:"
+p arr
+
+# Or
+arr = [{a: 1}, {b: 2, c: 3}, {d: 4, e: 5, f: 6}]
+arr.map do |hsh|
+  incremented_hash = {}
+  hsh.each do |key, value|
+    incremented_hash[key] = value + 1
+  end
+  incremented_hash
+end

@@ -4,9 +4,9 @@
 # How would you order this array of number strings by descending numeric value?
 arr = ['10', '11', '9', '7', '8']
 
-result =  arr.sort do |a, b|
-            b.to_i <=> a.to_i
-          end
+result = arr.sort do |a, b|
+           b.to_i <=> a.to_i
+         end
 
 p result
 
@@ -16,14 +16,13 @@ p result
 # How would you order this array of hashes based on the year of
 # publication of each book, from the earliest to the latest?
 books = [
-  {title: 'One Hundred Years of Solitude', author: 'Gabriel Garcia Marquez', published: '1967'},
-  {title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', published: '1925'},
-  {title: 'War and Peace', author: 'Leo Tolstoy', published: '1869'},
-  {title: 'Ulysses', author: 'James Joyce', published: '1922'}
+  { title: 'One Hundred Years of Solitude', author: 'Gabriel Garcia Marquez', published: '1967' },
+  { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', published: '1925' },
+  { title: 'War and Peace', author: 'Leo Tolstoy', published: '1869' },
+  { title: 'Ulysses', author: 'James Joyce', published: '1922' }
 ]
 
 p books.sort_by { |book| book[:published] }
-
 
 ############################################################
 # 3
@@ -60,3 +59,55 @@ hsh1[:first][2][0] = 4
 
 hsh2 = {['a'] => {a: ['1', :two, 3], b: 4}, 'b' => 5}
 hsh2[['a']][:a][2] = 4
+
+############################################################
+# 5
+
+# Figure out the total age of just the male members of the family
+munsters = {
+  "Herman" => { "age" => 32, "gender" => "male" },
+  "Lily" => { "age" => 30, "gender" => "female" },
+  "Grandpa" => { "age" => 402, "gender" => "male" },
+  "Eddie" => { "age" => 10, "gender" => "male" },
+  "Marilyn" => { "age" => 23, "gender" => "female" }
+}
+
+male_munsters = munsters.select { |_k, v| v['gender'] == 'male' }
+
+total_male_ages = 0
+
+male_munsters.each { |_k, v| total_male_ages += v['age'] }
+
+puts "Total male age is: #{total_male_ages}"
+
+# Or
+
+total_male_ages = 0
+
+munsters.each_value do |details|
+  total_male_ages += details['age'] if details['gender'] == 'male'
+end
+
+puts "Total male age is: #{total_male_ages}"
+
+############################################################
+# 6
+
+# Print out the name, age and gender of each family member
+# using string substitution and this hard-coded string:
+# (Name) is a (age)-year-old (male or female).
+munsters = {
+  "Herman" => { "age" => 32, "gender" => "male" },
+  "Lily" => { "age" => 30, "gender" => "female" },
+  "Grandpa" => { "age" => 402, "gender" => "male" },
+  "Eddie" => { "age" => 10, "gender" => "male" },
+  "Marilyn" => { "age" => 23, "gender" => "female" }
+}
+
+info_template = "(Name) is a (age)-year-old (male or female)."
+
+munsters.each do |name, details|
+  puts info_template.sub("(Name)", name)
+                    .sub("(age)", details["age"].to_s)
+                    .sub("(male or female)", details["gender"])
+end

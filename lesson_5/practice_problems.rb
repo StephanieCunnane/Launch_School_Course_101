@@ -225,3 +225,17 @@ arr.each do |element|
 end
 
 p hsh
+
+############################################################
+# 13
+
+# Return a new array containing the same sub-arrays as the original but ordered
+# logically according to the numeric value of the odd integers they contain.
+# Output: [[1, 8, 3], [1, 6, 7], [1, 4, 9]]
+arr = [[1, 6, 7], [1, 4, 9], [1, 8, 3]]
+
+result = arr.sort_by do |sub_arr|
+  sub_arr.select(&:odd?)
+end
+
+p result

@@ -193,3 +193,35 @@ arr.map do |hsh|
   end
   incremented_hash
 end
+
+############################################################
+# 11
+
+# Return a new array identical in structure to the original but containing
+# only the integers that are multiples of 3.
+arr = [[2], [3, 5, 7], [9], [11, 13, 15]]
+
+result = arr.map do |sub_arr|
+  sub_arr.select { |num| num % 3 == 0 }
+end
+
+p result
+
+############################################################
+# 12
+
+# Without using the Array#to_h method, write some code that will return a hash
+# where the key is the first item in each sub array and the value is the
+# second item.
+arr = [[:a, 1], ['b', 'two'], ['sea', {c: 3}], [{a: 1, b: 2, c: 3, d: 4}, 'D']]
+
+p Hash[arr]
+
+# Or
+
+hsh = {}
+arr.each do |element|
+  hsh[element.first] = element.last
+end
+
+p hsh

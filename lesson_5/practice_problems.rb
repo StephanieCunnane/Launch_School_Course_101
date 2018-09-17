@@ -279,3 +279,31 @@ result = arr.select do |hsh|
          end
 
 p result
+
+############################################################
+# 16
+
+# Write a method that returns one UUID when called with no parameters.
+# Sample output: "f65c57f6-a6aa-17a8-faa1-a67f2dc9fa91"
+
+# ugly brute force approach
+def generate_uuid
+  chars = %w(0 1 2 3 4 5 6 7 8 9 a b c d e f)
+  "#{chars.sample(8).join}-#{chars.sample(4).join}-#{chars.sample(4).join}-" \
+  "#{chars.sample(4).join}-#{chars.sample(12).join}"
+end
+
+generate_uuid()
+
+# Or
+
+def generate_uuid
+  chars = %w(0 1 2 3 4 5 6 7 8 9 a b c d e f)
+  uuid = ''
+  36.times do |num|
+    [8, 13, 18, 23].include?(num) ? uuid << '-' : uuid << chars.sample
+  end
+  uuid
+end
+
+generate_uuid()

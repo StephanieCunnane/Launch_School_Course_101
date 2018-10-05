@@ -9,6 +9,17 @@ def prompt(msg)
   puts "=> #{msg}"
 end
 
+def joinor(arr, delimiter=', ', joining_word='or')
+  case arr.size
+  when 0 then ''
+  when 1 then arr.first
+  when 2 then arr.join(" #{joining_word} ")
+  else
+    arr[-1] = "#{joining_word} #{arr.last}"
+    arr.join(delimiter)
+  end
+end
+
 def display_board(brd)
   system('clear')
   puts "You're #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}."
@@ -40,7 +51,7 @@ end
 def player_places_piece!(brd)
   square = ''
   loop do
-    prompt("Choose a square (#{empty_squares(brd).join(', ')}):")
+    prompt("Choose a square (#{joinor(empty_squares(brd))}):")
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt("Sorry, that's not a valid choice.")

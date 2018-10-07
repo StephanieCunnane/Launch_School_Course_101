@@ -28,6 +28,13 @@ def add_point(old_score)
   old_score + 1
 end
 
+def display_welcome_msg
+  prompt("Welcome to Tic Tac Toe! The first player to win 5 rounds is " \
+         "the overall winner. Good luck!")
+  prompt("(Press any key to begin.)")
+  gets
+end
+
 def initialize_board
   new_board = {}
   (1..9).each { |num| new_board[num] = INITIAL_MARKER }
@@ -102,11 +109,7 @@ def detect_game_winner(player_score, computer_score)
   end
 end
 
-prompt("Welcome to Tic Tac Toe! The first player to win 5 rounds is " \
-       "the overall winner. Good luck!")
-# Give the user a chance to read the message before the screen is cleared to
-# display the board
-sleep(3)
+display_welcome_msg
 
 loop do
   board = initialize_board
@@ -136,10 +139,10 @@ loop do
   end
 
   if detect_game_winner(player_score, computer_score) == 'Player'
-    prompt("Player won the overall game!")
+    prompt("And Player won the overall game!")
     break
   elsif detect_game_winner(player_score, computer_score) == 'Computer'
-    prompt("Computer won the overall game!")
+    prompt("And Computer won the overall game!")
     break
   end
 

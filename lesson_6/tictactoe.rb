@@ -1,4 +1,3 @@
-
 WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
                 [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + # columns
                 [[1, 5, 9], [3, 5, 7]]              # diagonals
@@ -30,9 +29,16 @@ def add_point(old_score)
   old_score += 1
 end
 
-def display_board(brd)
+def initialize_board
+  new_board = {}
+  (1..9).each { |num| new_board[num] = INITIAL_MARKER }
+  new_board
+end
+
+def display_board(brd, player_score, computer_score)
   system("clear") || system("cls")
   prompt("You're #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}.")
+  prompt("Current score: Player: #{player_score}, Computer: #{computer_score}")
   puts ""
   puts "     |     |"
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
@@ -46,12 +52,6 @@ def display_board(brd)
   puts "  #{brd[7]}  |  #{brd[8]}  |  #{brd[9]}"
   puts "     |     |"
   puts ""
-end
-
-def initialize_board
-  new_board = {}
-  (1..9).each { |num| new_board[num] = INITIAL_MARKER }
-  new_board
 end
 
 def empty_squares(brd)
@@ -101,11 +101,17 @@ def detect_game_winner(player_score, computer_score)
   end
 end
 
+prompt("Welcome to Tic Tac Toe! The first player to win 5 rounds is " +
+       "the overall winner. Good luck!")
+# Give the user a chance to read the message before the screen is cleared to
+# display the board
+sleep(3)
+
 loop do
   board = initialize_board
 
   loop do
-    display_board(board)
+    display_board(board, player_score, computer_score)
 
     player_places_piece!(board)
     break if someone_won_round?(board) || board_full?(board)
@@ -114,12 +120,11 @@ loop do
     break if someone_won_round?(board) || board_full?(board)
   end
 
-  display_board(board)
+  display_board(board, player_score, computer_score)
 
   if someone_won_round?(board)
     prompt("#{detect_round_winner(board)} won this round!")
 
-    # add a point to the round winner's score
     if detect_round_winner(board) == 'Player'
       player_score = add_point(player_score)
     elsif detect_round_winner(board) == 'Computer'

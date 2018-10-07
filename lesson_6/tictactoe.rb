@@ -31,7 +31,7 @@ end
 def display_welcome_msg
   prompt("Welcome to Tic Tac Toe! The first player to win 5 rounds is " \
          "the overall winner. Good luck!")
-  prompt("(Press any key to begin.)")
+  prompt("(Press Enter to begin.)")
   gets
 end
 
@@ -79,8 +79,23 @@ def player_places_piece!(brd)
 end
 
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
+  square = if detect_at_risk_square(brd)
+             detect_at_risk_square(brd)
+           else
+             empty_squares(brd).sample
+           end
+
   brd[square] = COMPUTER_MARKER
+end
+
+def detect_at_risk_square(brd)
+  WINNING_LINES.each do |line|
+    if brd.values_at(*line).count(PLAYER_MARKER) == 2 &&
+       brd.values_at(*line).count(INITIAL_MARKER) == 1
+      return line.select { |location| brd[location] == INITIAL_MARKER }[0]
+    end
+  end
+  nil
 end
 
 def board_full?(brd)

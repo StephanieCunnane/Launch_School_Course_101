@@ -6,7 +6,6 @@ INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 
-
 player_score = 0
 computer_score = 0
 
@@ -26,7 +25,7 @@ def joinor(arr, delimiter=', ', joining_word='or')
 end
 
 def add_point(old_score)
-  old_score += 1
+  old_score + 1
 end
 
 def initialize_board
@@ -35,6 +34,7 @@ def initialize_board
   new_board
 end
 
+# rubocop:disable Metrics/MethodLength, Metrics/AbcSize
 def display_board(brd, player_score, computer_score)
   system("clear") || system("cls")
   prompt("You're #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}.")
@@ -53,6 +53,7 @@ def display_board(brd, player_score, computer_score)
   puts "     |     |"
   puts ""
 end
+# rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
 def empty_squares(brd)
   brd.keys.select { |num| brd[num] == INITIAL_MARKER }
@@ -101,7 +102,7 @@ def detect_game_winner(player_score, computer_score)
   end
 end
 
-prompt("Welcome to Tic Tac Toe! The first player to win 5 rounds is " +
+prompt("Welcome to Tic Tac Toe! The first player to win 5 rounds is " \
        "the overall winner. Good luck!")
 # Give the user a chance to read the message before the screen is cleared to
 # display the board
@@ -142,9 +143,14 @@ loop do
     break
   end
 
-  prompt("Play again? (y or n)")
-  answer = gets.chomp
-  break unless ['y', 'yes'].include?(answer.downcase)
+  answer = ''
+  loop do
+    prompt("Play again? (y or n)")
+    answer = gets.chomp.downcase
+    break if ['n', 'no', 'y', 'yes'].include?(answer)
+    prompt("That's not a valid answer.")
+  end
+  break unless ['y', 'yes'].include?(answer)
 end
 
 prompt("Thank you for playing Tic Tac Toe! Goodbye!")

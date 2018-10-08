@@ -29,6 +29,8 @@ def add_point(old_score)
 end
 
 def display_welcome_msg
+  prompt("############################################################" \
+         "##############################")
   prompt("Welcome to Tic Tac Toe! The first player to win 5 rounds is " \
          "the overall winner. Good luck!")
   prompt("(Press Enter to begin.)")
@@ -79,8 +81,8 @@ def player_places_piece!(brd)
 end
 
 def computer_places_piece!(brd)
-  square = if detect_at_risk_square(brd)
-             detect_at_risk_square(brd)
+  square = if detect_two_in_a_row(brd)
+             detect_two_in_a_row(brd)
            else
              empty_squares(brd).sample
            end
@@ -88,9 +90,10 @@ def computer_places_piece!(brd)
   brd[square] = COMPUTER_MARKER
 end
 
-def detect_at_risk_square(brd)
+def detect_two_in_a_row(brd)
   WINNING_LINES.each do |line|
-    if brd.values_at(*line).count(PLAYER_MARKER) == 2 &&
+    if (brd.values_at(*line).count(COMPUTER_MARKER) == 2 ||
+       brd.values_at(*line).count(PLAYER_MARKER) == 2) &&
        brd.values_at(*line).count(INITIAL_MARKER) == 1
       return line.select { |location| brd[location] == INITIAL_MARKER }[0]
     end

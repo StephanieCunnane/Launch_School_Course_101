@@ -5,9 +5,11 @@ WINNING_SCORE = 5
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
+FIRST_MOVER = 'player'
 
 player_score = 0
 computer_score = 0
+first_mover = ''
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -85,6 +87,8 @@ def computer_places_piece!(brd)
              detect_two_in_a_row(brd, COMPUTER_MARKER)
            elsif detect_two_in_a_row(brd, PLAYER_MARKER)
              detect_two_in_a_row(brd, PLAYER_MARKER)
+           elsif empty_squares(brd).include?(5)
+             5
            else
              empty_squares(brd).sample
            end
@@ -133,14 +137,37 @@ display_welcome_msg
 loop do
   board = initialize_board
 
-  loop do
-    display_board(board, player_score, computer_score)
+  if FIRST_MOVER == 'choose'
+    answer = ''
+    loop do
+      prompt("Please indicate who goes first ('player' or 'computer'):")
+      answer = gets.chomp.downcase
+      break if ['player', 'computer'].include?(answer)
+      prompt("That's not a valid answer.")
+    end
+    first_mover = answer
+  end
 
-    player_places_piece!(board)
-    break if someone_won_round?(board) || board_full?(board)
+  if FIRST_MOVER == 'computer' || first_mover == 'computer'
+    loop do
+      computer_places_piece!(board)
+      break if someone_won_round?(board) || board_full?(board)
 
-    computer_places_piece!(board)
-    break if someone_won_round?(board) || board_full?(board)
+      display_board(board, player_score, computer_score)
+
+      player_places_piece!(board)
+      break if someone_won_round?(board) || board_full?(board)
+    end
+  else
+    loop do
+      display_board(board, player_score, computer_score)
+
+      player_places_piece!(board)
+      break if someone_won_round?(board) || board_full?(board)
+
+      computer_places_piece!(board)
+      break if someone_won_round?(board) || board_full?(board)
+    end
   end
 
   display_board(board, player_score, computer_score)

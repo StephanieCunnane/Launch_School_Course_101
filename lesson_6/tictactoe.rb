@@ -81,8 +81,10 @@ def player_places_piece!(brd)
 end
 
 def computer_places_piece!(brd)
-  square = if detect_two_in_a_row(brd)
-             detect_two_in_a_row(brd)
+  square = if detect_two_in_a_row(brd, COMPUTER_MARKER)
+             detect_two_in_a_row(brd, COMPUTER_MARKER)
+           elsif detect_two_in_a_row(brd, PLAYER_MARKER)
+             detect_two_in_a_row(brd, PLAYER_MARKER)
            else
              empty_squares(brd).sample
            end
@@ -90,10 +92,9 @@ def computer_places_piece!(brd)
   brd[square] = COMPUTER_MARKER
 end
 
-def detect_two_in_a_row(brd)
+def detect_two_in_a_row(brd, marker)
   WINNING_LINES.each do |line|
-    if (brd.values_at(*line).count(COMPUTER_MARKER) == 2 ||
-       brd.values_at(*line).count(PLAYER_MARKER) == 2) &&
+    if brd.values_at(*line).count(marker) == 2 &&
        brd.values_at(*line).count(INITIAL_MARKER) == 1
       return line.select { |location| brd[location] == INITIAL_MARKER }[0]
     end

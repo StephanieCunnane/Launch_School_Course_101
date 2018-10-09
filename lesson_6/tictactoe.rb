@@ -5,11 +5,11 @@ WINNING_SCORE = 5
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
-FIRST_MOVER = 'player'
+FIRST_MOVER = 'choose'
 
 player_score = 0
 computer_score = 0
-first_mover = ''
+current_player = FIRST_MOVER
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -70,6 +70,14 @@ def empty_squares(brd)
   brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
 
+def place_piece!(brd, current_player)
+  if current_player == 'player'
+    player_places_piece!(brd)
+  else
+    computer_places_piece!(brd)
+  end
+end
+
 def player_places_piece!(brd)
   square = ''
   loop do
@@ -96,11 +104,15 @@ def computer_places_piece!(brd)
   brd[square] = COMPUTER_MARKER
 end
 
+def alternate_player(current_player)
+  current_player == 'player' ? 'computer' : 'player'
+end
+
 def detect_two_in_a_row(brd, marker)
   WINNING_LINES.each do |line|
     if brd.values_at(*line).count(marker) == 2 &&
        brd.values_at(*line).count(INITIAL_MARKER) == 1
-      return line.select { |location| brd[location] == INITIAL_MARKER }[0]
+      return line.select { |square| brd[square] == INITIAL_MARKER }[0]
     end
   end
   nil
@@ -145,29 +157,14 @@ loop do
       break if ['player', 'computer'].include?(answer)
       prompt("That's not a valid answer.")
     end
-    first_mover = answer
+    current_player = answer
   end
 
-  if FIRST_MOVER == 'computer' || first_mover == 'computer'
-    loop do
-      computer_places_piece!(board)
-      break if someone_won_round?(board) || board_full?(board)
-
-      display_board(board, player_score, computer_score)
-
-      player_places_piece!(board)
-      break if someone_won_round?(board) || board_full?(board)
-    end
-  else
-    loop do
-      display_board(board, player_score, computer_score)
-
-      player_places_piece!(board)
-      break if someone_won_round?(board) || board_full?(board)
-
-      computer_places_piece!(board)
-      break if someone_won_round?(board) || board_full?(board)
-    end
+  loop do
+    display_board(board, player_score, computer_score)
+    place_piece!(board, current_player)
+    current_player = alternate_player(current_player)
+    break if someone_won_round?(board) || board_full?(board)
   end
 
   display_board(board, player_score, computer_score)
@@ -175,10 +172,9 @@ loop do
   if someone_won_round?(board)
     prompt("#{detect_round_winner(board)} won this round!")
 
-    if detect_round_winner(board) == 'Player'
-      player_score = add_point(player_score)
-    elsif detect_round_winner(board) == 'Computer'
-      computer_score = add_point(computer_score)
+    case detect_round_winner(board)
+    when 'Player' then player_score = add_point(player_score)
+    when 'Computer' then computer_score = add_point(computer_score)
     end
   else
     prompt("It's a tie!")

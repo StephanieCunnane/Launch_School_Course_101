@@ -152,7 +152,7 @@ loop do
   if FIRST_MOVER == 'choose'
     answer = ''
     loop do
-      prompt("Please indicate who goes first ('player' or 'computer'):")
+      prompt("Who goes first this round? ('player' or 'computer')")
       answer = gets.chomp.downcase
       break if ['player', 'computer'].include?(answer)
       prompt("That's not a valid answer.")
@@ -180,13 +180,12 @@ loop do
     prompt("It's a tie!")
   end
 
-  if detect_game_winner(player_score, computer_score) == 'Player'
-    prompt("And Player won the overall game!")
-    break
-  elsif detect_game_winner(player_score, computer_score) == 'Computer'
-    prompt("And Computer won the overall game!")
-    break
+  case detect_game_winner(player_score, computer_score)
+  when 'Player' then prompt("And Player won the overall game!")
+  when 'Computer' then prompt("And Computer won the overall game!")
   end
+
+  break if detect_game_winner(player_score, computer_score)
 
   answer = ''
   loop do

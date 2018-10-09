@@ -71,7 +71,7 @@ def empty_squares(brd)
 end
 
 def place_piece!(brd, current_player)
-  if current_player == 'player'
+  if ['p', 'player'].include?(current_player)
     player_places_piece!(brd)
   else
     computer_places_piece!(brd)
@@ -152,9 +152,9 @@ loop do
   if FIRST_MOVER == 'choose'
     answer = ''
     loop do
-      prompt("Who goes first this round? ('player' or 'computer')")
+      prompt("Who goes first this round? ('player'/'p' or 'computer'/'c')")
       answer = gets.chomp.downcase
-      break if ['player', 'computer'].include?(answer)
+      break if ['player', 'p', 'computer', 'c'].include?(answer)
       prompt("That's not a valid answer.")
     end
     current_player = answer

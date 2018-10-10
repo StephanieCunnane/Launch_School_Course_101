@@ -45,6 +45,16 @@ def initialize_board
   new_board
 end
 
+def pick_who_starts(current_player)
+  loop do
+    prompt("Who goes first this round? ('player'/'p' or 'computer'/'c')")
+    current_player = gets.chomp.downcase
+    break if ['player', 'p', 'computer', 'c'].include?(current_player)
+    prompt("That's not a valid answer.")
+  end
+  current_player
+end
+
 # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
 def display_board(brd, player_score, computer_score)
   system("clear") || system("cls")
@@ -149,14 +159,7 @@ display_welcome_msg
 loop do
   board = initialize_board
 
-  if FIRST_MOVER == 'choose'
-    loop do
-      prompt("Who goes first this round? ('player'/'p' or 'computer'/'c')")
-      current_player = gets.chomp.downcase
-      break if ['player', 'p', 'computer', 'c'].include?(current_player)
-      prompt("That's not a valid answer.")
-    end
-  end
+  current_player = pick_who_starts(current_player) if FIRST_MOVER == 'choose'
 
   loop do
     display_board(board, player_score, computer_score)

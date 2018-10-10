@@ -167,10 +167,11 @@ end
 
 display_welcome_msg
 
+first_player = pick_who_starts(current_player) if FIRST_MOVER == 'choose'
+
 loop do
   board = initialize_board
-
-  current_player = pick_who_starts(current_player) if FIRST_MOVER == 'choose'
+  current_player = first_player
 
   loop do
     display_board(board, player_score, computer_score)

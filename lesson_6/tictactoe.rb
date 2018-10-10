@@ -7,7 +7,7 @@ PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 FIRST_MOVER = 'choose'
 
-score = { player: 0, computer: 0}
+score = { player: 0, computer: 0 }
 current_player = FIRST_MOVER
 
 def prompt(msg)
@@ -54,7 +54,8 @@ end
 def display_board(brd, score)
   system("clear") || system("cls")
   prompt("You're #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}.")
-  prompt("Current score: Player: #{score[:player]}, Computer: #{score[:computer]}")
+  prompt("Current score: Player: #{score[:player]}, " \
+         "Computer: #{score[:computer]}")
   puts ""
   puts "     |     |"
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
@@ -131,6 +132,13 @@ def someone_won_round?(brd)
   !!detect_round_winner(brd)
 end
 
+def update_score(score, brd)
+  case detect_round_winner(brd)
+  when 'Player' then score[:player] += 1
+  when 'Computer' then score[:computer] += 1
+  end
+end
+
 def detect_round_winner(brd)
   WINNING_LINES.each do |line|
     if brd.values_at(*line).count(PLAYER_MARKER) == 3
@@ -151,8 +159,8 @@ end
 
 def display_game_winner(score)
   case detect_game_winner(score)
-  when 'Player' then 'Player won the game!'
-  when 'Computer' then 'Computer won the game!'
+  when 'Player' then 'And Player won the game!'
+  when 'Computer' then 'And Computer won the game!'
   end
 end
 
@@ -186,11 +194,7 @@ loop do
 
   if someone_won_round?(board)
     prompt("#{detect_round_winner(board)} won this round!")
-
-    case detect_round_winner(board)
-    when 'Player' then score[:player] += 1
-    when 'Computer' then score[:computer] += 1
-    end
+    update_score(score, board)
   else
     prompt("It's a tie!")
   end

@@ -35,9 +35,7 @@ def display_welcome_msg
 end
 
 def initialize_board
-  new_board = {}
-  (1..9).each { |num| new_board[num] = INITIAL_MARKER }
-  new_board
+  (1..9).each_with_object({}) { |num, board| board[num] = INITIAL_MARKER }
 end
 
 def pick_who_starts(current_player)
@@ -132,7 +130,7 @@ def someone_won_round?(brd)
   !!detect_round_winner(brd)
 end
 
-def update_score(score, brd)
+def update_score!(score, brd)
   case detect_round_winner(brd)
   when 'Player' then score[:player] += 1
   when 'Computer' then score[:computer] += 1
@@ -194,7 +192,7 @@ loop do
 
   if someone_won_round?(board)
     prompt("#{detect_round_winner(board)} won this round!")
-    update_score(score, board)
+    update_score!(score, board)
   else
     prompt("It's a tie!")
   end

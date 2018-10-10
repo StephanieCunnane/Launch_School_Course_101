@@ -154,6 +154,17 @@ def detect_game_winner(player_score, computer_score)
   end
 end
 
+def check_if_we_play_again
+  answer = ''
+  loop do
+    prompt("Play again? (y or n)")
+    answer = gets.chomp.downcase
+    break if ['n', 'no', 'y', 'yes'].include?(answer)
+    prompt("That's not a valid answer.")
+  end
+  answer
+end
+
 display_welcome_msg
 
 loop do
@@ -188,14 +199,7 @@ loop do
 
   break if detect_game_winner(player_score, computer_score)
 
-  answer = ''
-  loop do
-    prompt("Play again? (y or n)")
-    answer = gets.chomp.downcase
-    break if ['n', 'no', 'y', 'yes'].include?(answer)
-    prompt("That's not a valid answer.")
-  end
-  break unless ['y', 'yes'].include?(answer)
+  break unless ['y', 'yes'].include?(check_if_we_play_again)
 end
 
 prompt("Thank you for playing Tic Tac Toe! Goodbye!")

@@ -115,7 +115,7 @@ def computer_places_piece!(brd)
 end
 
 def alternate_player(current_player)
-  current_player == 'player' ? 'computer' : 'player'
+  current_player == 'player' || current_player == 'p' ? 'computer' : 'player'
 end
 
 def detect_two_in_a_row(brd, marker)

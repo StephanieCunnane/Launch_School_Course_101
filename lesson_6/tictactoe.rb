@@ -7,7 +7,7 @@ PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 FIRST_MOVER = 'choose'
 
-score = { player: 0, computer: 0 }
+game_score = { player: 0, computer: 0 }
 current_player = FIRST_MOVER
 
 def prompt(msg)
@@ -38,14 +38,14 @@ def initialize_board
   (1..9).each_with_object({}) { |num, board| board[num] = INITIAL_MARKER }
 end
 
-def pick_who_starts(current_player)
+def pick_who_starts(present_player)
   loop do
     prompt("Who goes first this game? ('player'/'p' or 'computer'/'c')")
-    current_player = gets.chomp.downcase
-    break if ['player', 'p', 'computer', 'c'].include?(current_player)
+    present_player = gets.chomp.downcase
+    break if ['player', 'p', 'computer', 'c'].include?(present_player)
     prompt("That's not a valid answer.")
   end
-  current_player
+  present_player
 end
 
 # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -74,8 +74,8 @@ def empty_squares(brd)
   brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
 
-def place_piece!(brd, current_player)
-  if ['p', 'player'].include?(current_player)
+def place_piece!(brd, present_player)
+  if ['p', 'player'].include?(present_player)
     player_places_piece!(brd)
   else
     computer_places_piece!(brd)
@@ -108,8 +108,8 @@ def computer_places_piece!(brd)
   brd[square] = COMPUTER_MARKER
 end
 
-def alternate_player(current_player)
-  current_player == 'player' || current_player == 'p' ? 'computer' : 'player'
+def alternate_player(present_player)
+  present_player == 'player' || present_player == 'p' ? 'computer' : 'player'
 end
 
 def detect_two_in_a_row(brd, marker)
@@ -182,26 +182,26 @@ loop do
   current_player = first_player if FIRST_MOVER == 'choose'
 
   loop do
-    display_board(board, score)
+    display_board(board, game_score)
     place_piece!(board, current_player)
     current_player = alternate_player(current_player)
     break if someone_won_round?(board) || board_full?(board)
   end
 
-  display_board(board, score)
+  display_board(board, game_score)
 
   if someone_won_round?(board)
     prompt("#{detect_round_winner(board)} won this round!")
-    update_score!(score, board)
+    update_score!(game_score, board)
   else
     prompt("It's a tie!")
   end
 
-  if [score[:player], score[:computer]].include?(WINNING_SCORE)
-    prompt(display_game_winner(score))
+  if game_score.values.include?(WINNING_SCORE)
+    prompt(display_game_winner(game_score))
   end
 
-  break if detect_game_winner(score)
+  break if detect_game_winner(game_score)
   break unless ['y', 'yes'].include?(check_if_we_play_again)
 end
 

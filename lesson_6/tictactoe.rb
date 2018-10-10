@@ -47,7 +47,7 @@ end
 
 def pick_who_starts(current_player)
   loop do
-    prompt("Who goes first this round? ('player'/'p' or 'computer'/'c')")
+    prompt("Who goes first this game? ('player'/'p' or 'computer'/'c')")
     current_player = gets.chomp.downcase
     break if ['player', 'p', 'computer', 'c'].include?(current_player)
     prompt("That's not a valid answer.")
@@ -154,6 +154,13 @@ def detect_game_winner(player_score, computer_score)
   end
 end
 
+def display_game_winner(player_score, computer_score)
+  case detect_game_winner(player_score, computer_score)
+  when 'Player' then 'Player'
+  when 'Computer' then 'Computer'
+  end
+end
+
 def check_if_we_play_again
   answer = ''
   loop do
@@ -171,7 +178,7 @@ first_player = pick_who_starts(current_player) if FIRST_MOVER == 'choose'
 
 loop do
   board = initialize_board
-  current_player = first_player
+  current_player = first_player if FIRST_MOVER == 'choose'
 
   loop do
     display_board(board, player_score, computer_score)
@@ -193,13 +200,11 @@ loop do
     prompt("It's a tie!")
   end
 
-  case detect_game_winner(player_score, computer_score)
-  when 'Player' then prompt("And Player won the overall game!")
-  when 'Computer' then prompt("And Computer won the overall game!")
+  if [player_score, computer_score].include?(WINNING_SCORE)
+    prompt(display_game_winner(player_score, computer_score))
   end
 
   break if detect_game_winner(player_score, computer_score)
-
   break unless ['y', 'yes'].include?(check_if_we_play_again)
 end
 

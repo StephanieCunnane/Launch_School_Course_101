@@ -7,8 +7,7 @@ PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 FIRST_MOVER = 'choose'
 
-player_score = 0
-computer_score = 0
+score = { player: 0, computer: 0}
 current_player = FIRST_MOVER
 
 def prompt(msg)
@@ -24,10 +23,6 @@ def joinor(arr, delimiter=', ', joining_word='or')
     arr[-1] = "#{joining_word} #{arr.last}"
     arr.join(delimiter)
   end
-end
-
-def add_point(old_score)
-  old_score + 1
 end
 
 def display_welcome_msg
@@ -56,10 +51,10 @@ def pick_who_starts(current_player)
 end
 
 # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-def display_board(brd, player_score, computer_score)
+def display_board(brd, score)
   system("clear") || system("cls")
   prompt("You're #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}.")
-  prompt("Current score: Player: #{player_score}, Computer: #{computer_score}")
+  prompt("Current score: Player: #{score[:player]}, Computer: #{score[:computer]}")
   puts ""
   puts "     |     |"
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
@@ -147,17 +142,17 @@ def detect_round_winner(brd)
   nil
 end
 
-def detect_game_winner(player_score, computer_score)
+def detect_game_winner(score)
   case WINNING_SCORE
-  when player_score then 'Player'
-  when computer_score then 'Computer'
+  when score[:player] then 'Player'
+  when score[:computer] then 'Computer'
   end
 end
 
-def display_game_winner(player_score, computer_score)
-  case detect_game_winner(player_score, computer_score)
-  when 'Player' then 'Player'
-  when 'Computer' then 'Computer'
+def display_game_winner(score)
+  case detect_game_winner(score)
+  when 'Player' then 'Player won the game!'
+  when 'Computer' then 'Computer won the game!'
   end
 end
 
@@ -181,30 +176,30 @@ loop do
   current_player = first_player if FIRST_MOVER == 'choose'
 
   loop do
-    display_board(board, player_score, computer_score)
+    display_board(board, score)
     place_piece!(board, current_player)
     current_player = alternate_player(current_player)
     break if someone_won_round?(board) || board_full?(board)
   end
 
-  display_board(board, player_score, computer_score)
+  display_board(board, score)
 
   if someone_won_round?(board)
     prompt("#{detect_round_winner(board)} won this round!")
 
     case detect_round_winner(board)
-    when 'Player' then player_score = add_point(player_score)
-    when 'Computer' then computer_score = add_point(computer_score)
+    when 'Player' then score[:player] += 1
+    when 'Computer' then score[:computer] += 1
     end
   else
     prompt("It's a tie!")
   end
 
-  if [player_score, computer_score].include?(WINNING_SCORE)
-    prompt(display_game_winner(player_score, computer_score))
+  if [score[:player], score[:computer]].include?(WINNING_SCORE)
+    prompt(display_game_winner(score))
   end
 
-  break if detect_game_winner(player_score, computer_score)
+  break if detect_game_winner(score)
   break unless ['y', 'yes'].include?(check_if_we_play_again)
 end
 

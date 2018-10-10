@@ -150,14 +150,12 @@ loop do
   board = initialize_board
 
   if FIRST_MOVER == 'choose'
-    answer = ''
     loop do
       prompt("Who goes first this round? ('player'/'p' or 'computer'/'c')")
-      answer = gets.chomp.downcase
-      break if ['player', 'p', 'computer', 'c'].include?(answer)
+      current_player = gets.chomp.downcase
+      break if ['player', 'p', 'computer', 'c'].include?(current_player)
       prompt("That's not a valid answer.")
     end
-    current_player = answer
   end
 
   loop do

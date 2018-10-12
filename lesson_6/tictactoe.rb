@@ -5,7 +5,7 @@ WINNING_SCORE = 5
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
-FIRST_MOVER = 'choose'
+FIRST_MOVER = nil
 
 game_score = { player: 0, computer: 0 }
 current_player = FIRST_MOVER
@@ -41,11 +41,15 @@ end
 def pick_who_starts(present_player)
   loop do
     prompt("Who goes first this game? ('player'/'p' or 'computer'/'c')")
-    present_player = gets.chomp.downcase
-    break if ['player', 'p', 'computer', 'c'].include?(present_player)
+    present_player = gets.chomp.downcase.to_sym
+    break if valid_player_choice?(present_player)
     prompt("That's not a valid answer.")
   end
   present_player
+end
+
+def valid_player_choice?(user_input)
+  [:player, :p, :computer, :c].include?(user_input)
 end
 
 # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -75,7 +79,7 @@ def empty_squares(brd)
 end
 
 def place_piece!(brd, present_player)
-  if ['p', 'player'].include?(present_player)
+  if [:p, :player].include?(present_player)
     player_places_piece!(brd)
   else
     computer_places_piece!(brd)
@@ -109,7 +113,7 @@ def computer_places_piece!(brd)
 end
 
 def alternate_player(present_player)
-  present_player == 'player' || present_player == 'p' ? 'computer' : 'player'
+  present_player == :player || present_player == :p ? :computer : :player
 end
 
 def detect_two_in_a_row(brd, marker)
@@ -132,17 +136,17 @@ end
 
 def update_score!(score, brd)
   case detect_round_winner(brd)
-  when 'Player' then score[:player] += 1
-  when 'Computer' then score[:computer] += 1
+  when :player then score[:player] += 1
+  when :computer then score[:computer] += 1
   end
 end
 
 def detect_round_winner(brd)
   WINNING_LINES.each do |line|
     if brd.values_at(*line).count(PLAYER_MARKER) == 3
-      return 'Player'
+      return :player
     elsif brd.values_at(*line).count(COMPUTER_MARKER) == 3
-      return 'Computer'
+      return :computer
     end
   end
   nil
@@ -150,15 +154,15 @@ end
 
 def detect_game_winner(score)
   case WINNING_SCORE
-  when score[:player] then 'Player'
-  when score[:computer] then 'Computer'
+  when score[:player] then :player
+  when score[:computer] then :computer
   end
 end
 
 def display_game_winner(score)
   case detect_game_winner(score)
-  when 'Player' then 'And Player won the game!'
-  when 'Computer' then 'And Computer won the game!'
+  when :player then 'And Player won the game!'
+  when :computer then 'And Computer won the game!'
   end
 end
 
@@ -167,19 +171,23 @@ def check_if_we_play_again
   loop do
     prompt("Play again? (y or n)")
     answer = gets.chomp.downcase
-    break if ['n', 'no', 'y', 'yes'].include?(answer)
+    break if valid_play_again_choice?(answer)
     prompt("That's not a valid answer.")
   end
   answer
 end
 
+def valid_play_again_choice?(user_input)
+  ['n', 'no', 'y', 'yes'].include?(user_input)
+end
+
 display_welcome_msg
 
-first_player = pick_who_starts(current_player) if FIRST_MOVER == 'choose'
+first_player = pick_who_starts(current_player) unless FIRST_MOVER
 
 loop do
   board = initialize_board
-  current_player = first_player if FIRST_MOVER == 'choose'
+  current_player = first_player unless FIRST_MOVER
 
   loop do
     display_board(board, game_score)
@@ -191,7 +199,7 @@ loop do
   display_board(board, game_score)
 
   if someone_won_round?(board)
-    prompt("#{detect_round_winner(board)} won this round!")
+    prompt("#{detect_round_winner(board).capitalize} won this round!")
     update_score!(game_score, board)
   else
     prompt("It's a tie!")

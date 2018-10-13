@@ -91,12 +91,17 @@ def busted?(hand)
   calculate_hand_value(hand) > 21
 end
 
+# we should only compare hands if neither player has busted
 def compare_hands(player_hand, dealer_hand)
   top_score = [calculate_hand_value(player_hand),
                calculate_hand_value(dealer_hand)].max
+
+  player_score = calculate_hand_value(player_hand)
+  dealer_score = calculate_hand_value(dealer_hand)
+
   case top_score
-  when calculate_hand_value(player_hand) then 'Player'
-  when calculate_hand_value(dealer_hand) then 'Dealer'
+  when player_score then 'Player'
+  when dealer_score then 'Dealer'
   end
 end
 
@@ -133,17 +138,20 @@ loop do
   player_turn!(player_hand, dealer_hand, deck)
 
   if busted?(player_hand)
-    display_winner(compare_hands(player_hand, dealer_hand), player_hand, dealer_hand)
+    overall_winner = 'Dealer'
+    display_winner(overall_winner, player_hand, dealer_hand)
   else
     prompt("You chose to stay. Dealer's turn now...")
-    dealer_turn!(dealer_hand, deck)
   end
 
+  dealer_turn!(dealer_hand, deck)
+
   if busted?(dealer_hand)
-    display_winner(compare_hands(player_hand, dealer_hand), player_hand, dealer_hand)
+    overall_winner = 'Player'
+    display_winner(overall_winner, player_hand, dealer_hand)
   else
-    compare_hands(player_hand, dealer_hand)
-    display_winner(compare_hands(player_hand, dealer_hand), player_hand, dealer_hand)
+    overall_winner = compare_hands(player_hand, dealer_hand)
+    display_winner(overall_winner, player_hand, dealer_hand)
   end
 
   break unless ['y', 'yes'].include?(check_if_we_play_again)

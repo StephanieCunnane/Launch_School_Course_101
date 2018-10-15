@@ -87,28 +87,40 @@ def busted?(hand)
   calculate_hand_value(hand) > 21
 end
 
-# we should only compare hands if neither player has busted
-def compare_hands(player_hand, dealer_hand)
-  top_score = [calculate_hand_value(player_hand),
-               calculate_hand_value(dealer_hand)].max
-
+def detect_results(player_hand, dealer_hand)
   player_score = calculate_hand_value(player_hand)
   dealer_score = calculate_hand_value(dealer_hand)
 
-  case top_score
-  when player_score then 'Player'
-  when dealer_score then 'Dealer'
+  if player_score > 21
+    :player_busted
+  elsif dealer_score > 21
+    :dealer_busted
+  elsif player_score > dealer_score
+    :player
+  elsif dealer_score > player_score
+    :dealer
+  else
+    :tie
   end
 end
 
-def display_winner(overall_winner, player_hand, dealer_hand)
+def display_results(player_hand, dealer_hand)
+  result = detect_results(player_hand, dealer_hand)
+
   prompt("And the final hands:")
   prompt("You: #{player_hand}, for a total of: #{calculate_hand_value(player_hand)}")
   prompt("Dealer: #{dealer_hand}, for a total of: #{calculate_hand_value(dealer_hand)}")
-  puts overall_winner ? "#{overall_winner} wins!" : "It's a tie!"
+
+  case result
+  when :player_busted then prompt("You busted! Dealer wins!")
+  when :dealer_busted then prompt("Dealer busted! You win!")
+  when :player then prompt("You win!")
+  when :dealer then prompt("Dealer wins!")
+  when :tie then prompt("It's a tie!")
+  end
 end
 
-def check_if_we_play_again
+def play_again?
   answer = ''
   loop do
     prompt("Play again? (y or n)")
@@ -116,7 +128,7 @@ def check_if_we_play_again
     break if valid_play_again_choice?(answer)
     prompt("That's not a valid answer.")
   end
-  answer
+  ['y', 'yes'].include?(answer)
 end
 
 def valid_play_again_choice?(user_input)
@@ -136,8 +148,8 @@ loop do
   player_turn!(player_hand, deck)
 
   if busted?(player_hand)
-    overall_winner = 'Dealer'
-    display_winner(overall_winner, player_hand, dealer_hand)
+    display_results(player_hand, dealer_hand)
+    play_again? ? next : break
   else
     prompt("You chose to stay. Dealer's turn now...")
   end
@@ -145,14 +157,13 @@ loop do
   dealer_turn!(dealer_hand, deck)
 
   if busted?(dealer_hand)
-    overall_winner = 'Player'
-    display_winner(overall_winner, player_hand, dealer_hand)
+    display_results(player_hand, dealer_hand)
+    play_again? ? next : break
   else
-    overall_winner = compare_hands(player_hand, dealer_hand)
-    display_winner(overall_winner, player_hand, dealer_hand)
+    display_results(player_hand, dealer_hand)
   end
 
-  break unless ['y', 'yes'].include?(check_if_we_play_again)
+  break unless play_again?
 end
 
 prompt("Thank you for playing 21! Goodbye!")

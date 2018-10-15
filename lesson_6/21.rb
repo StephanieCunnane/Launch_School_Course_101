@@ -23,7 +23,7 @@ end
 
 def display_hands(player_hand, dealer_hand)
   system("clear") || system("cls")
-  prompt("Your hand right now: #{player_hand}")
+  prompt("Your hand right now: #{player_hand}, for a total of: #{calculate_hand_value(player_hand)}")
   prompt("Dealer's hand right now: #{dealer_hand.first} and an unknown card")
   prompt("*****************************************************************")
 end
@@ -53,9 +53,8 @@ def valid_choice?(user_input)
   %w[hit h stay s].include?(user_input)
 end
 
-def player_turn!(player_hand, dealer_hand, deck_of_cards)
+def player_turn!(player_hand, deck_of_cards)
   loop do
-    display_hands(player_hand, dealer_hand)
     answer = ''
     loop do
       prompt("Would you like to hit or stay? ('hit'/'h' or 'stay'/'s')")
@@ -64,7 +63,12 @@ def player_turn!(player_hand, dealer_hand, deck_of_cards)
       prompt("That's not a valid answer.")
     end
     break if ['stay', 's'].include?(answer) || busted?(player_hand)
+
     hit!(player_hand, deck_of_cards)
+
+    prompt("You chose to hit!")
+    prompt("Your hand right now: #{player_hand}, for a total of: #{calculate_hand_value(player_hand)}")
+    prompt("****************************************************************************")
   end
 end
 
@@ -76,9 +80,7 @@ def dealer_turn!(dealer_hand, deck_of_cards)
 end
 
 def hit!(hand, deck_of_cards)
-  new_card = deck_of_cards.sample
-  deck_of_cards.delete(new_card)
-  hand << new_card
+  hand << deck_of_cards.pop
 end
 
 def busted?(hand)
@@ -101,8 +103,8 @@ end
 
 def display_winner(overall_winner, player_hand, dealer_hand)
   prompt("And the final hands:")
-  prompt("You: #{player_hand}")
-  prompt("Dealer: #{dealer_hand}")
+  prompt("You: #{player_hand}, for a total of: #{calculate_hand_value(player_hand)}")
+  prompt("Dealer: #{dealer_hand}, for a total of: #{calculate_hand_value(dealer_hand)}")
   puts overall_winner ? "#{overall_winner} wins!" : "It's a tie!"
 end
 
@@ -129,7 +131,9 @@ loop do
   player_hand = get_hand!(deck)
   dealer_hand = get_hand!(deck)
 
-  player_turn!(player_hand, dealer_hand, deck)
+  display_hands(player_hand, dealer_hand)
+
+  player_turn!(player_hand, deck)
 
   if busted?(player_hand)
     overall_winner = 'Dealer'

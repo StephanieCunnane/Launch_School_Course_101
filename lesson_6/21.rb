@@ -12,13 +12,9 @@ def display_welcome_msg
 end
 
 def initialize_deck
-  deck = []
   card_values = %w[2 3 4 5 6 7 8 9 10 J Q K A]
   suits = %w[H D C S]
-  suits.each do |suit|
-    13.times { |num| deck << [suit, card_values[num].to_s] }
-  end
-  deck
+  suits.product(card_values).shuffle
 end
 
 def get_hand!(deck_of_cards)

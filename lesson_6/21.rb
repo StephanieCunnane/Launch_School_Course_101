@@ -159,8 +159,6 @@ loop do
   if busted?(dealer_hand)
     display_results(player_hand, dealer_hand)
     play_again? ? next : break
-  else
-    display_results(player_hand, dealer_hand)
   end
 
   break unless play_again?

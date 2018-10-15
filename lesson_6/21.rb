@@ -23,7 +23,8 @@ end
 
 def display_hands(player_hand, dealer_hand)
   system("clear") || system("cls")
-  prompt("Your hand right now: #{player_hand}, for a total of: #{calculate_hand_value(player_hand)}")
+  prompt("Your hand right now: #{player_hand}, for a total of: " \
+         "#{calculate_hand_value(player_hand)}")
   prompt("Dealer's hand right now: #{dealer_hand.first} and an unknown card")
   prompt("*****************************************************************")
 end
@@ -67,8 +68,9 @@ def player_turn!(player_hand, deck_of_cards)
     hit!(player_hand, deck_of_cards)
 
     prompt("You chose to hit!")
-    prompt("Your hand right now: #{player_hand}, for a total of: #{calculate_hand_value(player_hand)}")
-    prompt("****************************************************************************")
+    prompt("Your hand right now: #{player_hand}, for a total of: " \
+           "#{calculate_hand_value(player_hand)}")
+    prompt("******************************************************************")
   end
 end
 
@@ -108,8 +110,10 @@ def display_results(player_hand, dealer_hand)
   result = detect_results(player_hand, dealer_hand)
 
   prompt("And the final hands:")
-  prompt("You: #{player_hand}, for a total of: #{calculate_hand_value(player_hand)}")
-  prompt("Dealer: #{dealer_hand}, for a total of: #{calculate_hand_value(dealer_hand)}")
+  prompt("You: #{player_hand}, for a total of: " \
+         "#{calculate_hand_value(player_hand)}")
+  prompt("Dealer: #{dealer_hand}, for a total of: " \
+         "#{calculate_hand_value(dealer_hand)}")
 
   case result
   when :player_busted then prompt("You busted! Dealer wins!")

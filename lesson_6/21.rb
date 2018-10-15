@@ -18,9 +18,7 @@ def initialize_deck
 end
 
 def get_hand!(deck_of_cards)
-  hand = deck_of_cards.sample(2)
-  deck_of_cards.delete_if { |card| hand.include?(card) }
-  hand
+  deck_of_cards.pop(2)
 end
 
 def display_hands(player_hand, dealer_hand)

@@ -293,7 +293,7 @@ def generate_uuid
   "#{chars.sample(4).join}-#{chars.sample(12).join}"
 end
 
-generate_uuid()
+puts generate_uuid()
 
 # Or
 
@@ -306,4 +306,4 @@ def generate_uuid
   uuid
 end
 
-generate_uuid()
+puts generate_uuid()

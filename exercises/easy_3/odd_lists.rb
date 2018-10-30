@@ -36,6 +36,16 @@ p oddities_alt2(['abc', 'def']) == ['abc']
 p oddities_alt2([123]) == [123]
 p oddities_alt2([]) == []
 
+def oddities_alt3(arr)
+  arr.select.with_index { |_num, index| index.even? }
+end
+
+p oddities_alt3([2, 3, 4, 5, 6]) == [2, 4, 6]
+p oddities_alt3([1, 2, 3, 4, 5, 6]) == [1, 3, 5]
+p oddities_alt3(['abc', 'def']) == ['abc']
+p oddities_alt3([123]) == [123]
+p oddities_alt3([]) == []
+
 def evens(arr)
   result = []
   arr.each_with_index { |num, index| result << num if index.odd? }

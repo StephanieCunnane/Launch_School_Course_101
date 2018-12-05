@@ -8,7 +8,7 @@ end
 def staggered_case(str)
   result = ''
   need_upper = true
-  str.chars.each do |char|
+  str.chars do |char|
     if need_upper
       result += char.upcase
     else
@@ -21,7 +21,7 @@ end
 
 def staggered_case(str, first_char_upper: true)
   result = ''
-  str.chars.each do |char|
+  str.chars do |char|
     if first_char_upper
       result += char.upcase
     else

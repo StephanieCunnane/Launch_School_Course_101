@@ -1,6 +1,6 @@
 def sum_of_sums(arr)
   sums = []
-  arr.each_with_index { |num, idx| sums << arr[0..idx].sum }
+  arr.each_index { |idx| sums << arr[0..idx].sum }
   sums.sum
 end
 

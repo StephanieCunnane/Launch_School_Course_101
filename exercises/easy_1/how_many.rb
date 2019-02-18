@@ -25,3 +25,29 @@ count_occurrences(vehicles)
 # truck => 3
 # SUV => 1
 # motorcycle => 2
+
+# Further Exploration - write a method that is insensitive to the case of
+# the elements in the given array
+
+def count_occurrences(arr)
+  counts = {}
+  arr.each do |elem|
+    if counts.keys.one? { |key| key.casecmp?(elem) }
+      counts.keys.each do |key|
+        counts[key] += 1 if key.casecmp?(elem)
+      end
+    else
+      counts[elem] = 1
+    end
+  end
+  counts.each { |k, v| puts "#{k} => #{v}" }
+end
+
+vehicles = [
+  'car', 'car', 'truck', 'car', 'SUV', 'truck',
+  'motorcycle', 'motorcycle', 'car', 'truck', 'suv', 'TrUck'
+]
+
+count_occurrences(vehicles)
+
+

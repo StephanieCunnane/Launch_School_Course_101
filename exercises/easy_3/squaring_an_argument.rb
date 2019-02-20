@@ -20,6 +20,12 @@ def power_of_n(num, exponent)
   total
 end
 
+def calculate_power(base, exponent)
+  accumulator = 1
+  exponent.times { accumulator = multiply(accumulator, base) }
+  accumulator
+end
+
 p square(5) == 25
 p square(-8) == 64
 
@@ -29,4 +35,6 @@ p power_of_n(2, 6) == 64
 p power_of_n(2, 1) == 2
 p power_of_n(2, 0) == 1
 
+p calculate_power(5, 3) == 125
+p calculate_power(5, 4) == 625
 

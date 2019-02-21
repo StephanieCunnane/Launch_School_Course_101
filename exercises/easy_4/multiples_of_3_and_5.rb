@@ -23,6 +23,15 @@ def multisum(limit)
   results.sum
 end
 
+# or
+
+def multisum(limit)
+  (1..limit).reduce(0) do |sum, int|
+    sum += int if int % 3 == 0 || int % 5 == 0
+    sum
+  end
+end
+
 p multisum(3) == 3
 p multisum(5) == 8
 p multisum(10) == 33

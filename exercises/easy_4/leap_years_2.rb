@@ -7,6 +7,20 @@ def leap_year?(year)
   false
 end
 
+def leap_year?(year)
+  return year % 4 == 0 if year < 1752
+  return true if year % 400 == 0
+  return true if year % 4 == 0 && year % 100 != 0
+  false
+end
+
+require 'date'
+
+def leap_year?(year)
+  return Date.julian_leap?(year) if year < 1752
+  Date.leap?(year)
+end
+
 p leap_year?(2016) == true
 p leap_year?(2015) == false
 p leap_year?(2100) == false

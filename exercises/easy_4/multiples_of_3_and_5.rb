@@ -13,6 +13,16 @@ def multisum(num)
   multiples.reduce(:+)
 end
 
+# or
+
+def multisum(limit)
+  results = []
+  (1..limit).each do |int|
+    results << int if int % 3 == 0 || int % 5 == 0
+  end
+  results.sum
+end
+
 p multisum(3) == 3
 p multisum(5) == 8
 p multisum(10) == 33

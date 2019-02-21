@@ -17,6 +17,12 @@ def leap_year?(year)
   false
 end
 
+require 'date'
+
+def leap_year?(year)
+  Date.leap?(year)
+end
+
 p leap_year?(2016) == true
 p leap_year?(2015) == false
 p leap_year?(2100) == false

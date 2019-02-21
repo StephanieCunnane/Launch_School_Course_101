@@ -6,6 +6,17 @@ def leap_year?(year)
   false
 end
 
+# Given solution
+def leap_year?(year)
+  (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)
+end
+
+def leap_year?(year)
+  return true if year % 400 == 0
+  return true if year % 4 == 0 && year % 100 != 0
+  false
+end
+
 p leap_year?(2016) == true
 p leap_year?(2015) == false
 p leap_year?(2100) == false
@@ -20,7 +31,3 @@ p leap_year?(1) == false
 p leap_year?(100) == false
 p leap_year?(400) == true
 
-# Given solution
-def leap_year?(year)
-  (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)
-end

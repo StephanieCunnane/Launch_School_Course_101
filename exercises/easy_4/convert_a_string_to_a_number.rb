@@ -21,6 +21,23 @@ def string_to_integer(num_str)
   sum
 end
 
+# Or
+DIGITS = %w(0 1 2 3 4 5 6 7 8 9)
+
+def string_to_integer(digit_str)
+  results = []
+  place_value_multiplier = 1
+
+  digits = digit_str.chars.map { |char| DIGITS.index(char) }
+
+  digits.reverse_each do |digit|
+    results.unshift(digit * place_value_multiplier)
+    place_value_multiplier *= 10
+  end
+
+  results.sum
+end
+
 p string_to_integer('400') == 400
 p string_to_integer('4321') == 4321
 p string_to_integer('570') == 570

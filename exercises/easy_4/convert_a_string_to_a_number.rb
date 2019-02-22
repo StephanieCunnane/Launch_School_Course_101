@@ -42,6 +42,27 @@ p string_to_integer('400') == 400
 p string_to_integer('4321') == 4321
 p string_to_integer('570') == 570
 
+# Given solution:
+# 1) Create a data structure mapping digit strings to their corresponding numeric values, a constant
+# 2) Using that constant data structure as the decoder, decode our specific digit_str using map
+# 3) Initialize and return numeric_value, initially set to 0
+# 4) We're going to iterate through our digits array with #each to build up numeric_value:
+#         #each will give us digit as a block parameter
+#         reassign numeric_value to 10 * numeric_value + digit
+
+DIGITS = %w(0 1 2 3 4 5 6 7 8 9)
+
+def string_to_integer(digit_str)
+  digits = digit_str.chars.map { |char| DIGITS.index(char) }
+
+  numeric_value = 0
+  digits.each { |digit| numeric_value = 10 * numeric_value + digit }
+  numeric_value
+end
+
+p string_to_integer('4321') == 4321
+p string_to_integer('570') == 570
+
 DIGITS = {
     '0' => 0,
     '1' => 1,

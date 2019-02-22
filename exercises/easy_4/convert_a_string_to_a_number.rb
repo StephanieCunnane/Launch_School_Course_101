@@ -63,6 +63,24 @@ end
 p string_to_integer('4321') == 4321
 p string_to_integer('570') == 570
 
+# What changes when we switch from decimal to hexadecimal?
+#  1) DIGITS constant has 16 elements, not 10
+#  2) name of the method and the test cases
+#  3) need to downcase the digit_str
+#  4) the multiplier changes from 10 to 16
+
+DIGITS = %w(0 1 2 3 4 5 6 7 8 9 a b c d e f)
+
+def hexadecimal_to_integer(digit_str)
+  digits = digit_str.downcase.chars.map { |char| DIGITS.index(char) }
+
+  numeric_value = 0
+  digits.each { |digit| numeric_value = 16 * numeric_value + digit }
+  numeric_value
+end
+
+p hexadecimal_to_integer('4D9f') == 19871
+
 DIGITS = {
     '0' => 0,
     '1' => 1,

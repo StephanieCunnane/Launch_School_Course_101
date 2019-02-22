@@ -41,3 +41,26 @@ def signed_integer_to_string(number)
   else integer_to_string(number)
   end
 end
+
+DIGITS = %w(0 1 2 3 4 5 6 7 8 9)
+
+def integer_to_string(int)
+  digits_str = ''
+  loop do
+    int, remainder = int.divmod(10)
+    digits_str.prepend(DIGITS[remainder])
+    break if int == 0
+  end
+  digits_str
+end
+
+def signed_integer_to_string(int)
+  return '0' if int.zero?
+  prefix = int.positive? ? '+' : '-'
+  num_str = integer_to_string(int.abs)
+  "#{prefix}#{num_str}"
+end
+
+p signed_integer_to_string(4321) == '+4321'
+p signed_integer_to_string(-123) == '-123'
+p signed_integer_to_string(0) == '0'

@@ -40,3 +40,24 @@ end
 p string_to_signed_integer('4321') == 4321
 p string_to_signed_integer('-570') == -570
 p string_to_signed_integer('+100') == 100
+
+DIGITS = %w(0 1 2 3 4 5 6 7 8 9)
+
+def string_to_integer(digit_str)
+  digits = digit_str.chars.map { |char| DIGITS.index(char) }
+
+  numeric_value = 0
+  digits.each { |digit| numeric_value = 10 * numeric_value + digit }
+  numeric_value
+end
+
+def string_to_signed_integer(digit_str)
+  negative = digit_str[0] == '-'
+  digit_str = digit_str.sub(/[+-]/, '')
+  int = string_to_integer(digit_str)
+  negative ? -int : int
+end
+
+p string_to_signed_integer('4321') == 4321
+p string_to_signed_integer('-570') == -570
+p string_to_signed_integer('+100') == 100

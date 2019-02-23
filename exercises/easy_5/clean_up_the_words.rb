@@ -34,3 +34,14 @@ end
 def cleanup(text)
   text.gsub(/[^a-z]/i, ' ').gsub(/\s+/, ' ')
 end
+
+# or
+LETTERS = ('A'..'Z').to_a + ('a'..'z').to_a
+
+def cleanup(phrase)
+  alphabetic_phrase = ''
+  phrase.each_char do |char|
+    alphabetic_phrase << (LETTERS.include?(char) ? char : ' ')
+  end
+  alphabetic_phrase.squeeze(' ')
+end

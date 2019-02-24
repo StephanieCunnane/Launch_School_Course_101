@@ -31,3 +31,19 @@ print_in_box('')
 #+--+
 
 print_in_box('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNxNssssssssssssss88s')
+
+TERMINAL_WIDTH = 80
+
+def print_in_box(phrase)
+  line_width = TERMINAL_WIDTH - 4
+  phrase = phrase[0...line_width] if phrase.size > line_width
+
+  outer_line = "+#{'-' * (phrase.size + 2)}+"
+  inner_line = "|#{' ' * (phrase.size + 2)}|"
+
+  puts outer_line
+  puts inner_line
+  puts "| #{phrase} |"
+  puts inner_line
+  puts outer_line
+end

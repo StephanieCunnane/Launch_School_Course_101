@@ -9,12 +9,6 @@ def crunch(str)
   results.join
 end
 
-p crunch('ddaaiillyy ddoouubbllee') == 'daily double'
-p crunch('4444abcabccba') == '4abcabcba'
-p crunch('ggggggggggggggg') == 'g'
-p crunch('a') == 'a'
-p crunch('') == ''
-
 # given solution
 def crunch(text)
   index = 0
@@ -25,3 +19,14 @@ def crunch(text)
   end
   crunch_text
 end
+
+def crunch(str)
+  str.chars.chunk_while { |a, b| a == b }.map(&:first).join
+end
+
+p crunch('ddaaiillyy ddoouubbllee') == 'daily double'
+p crunch('4444abcabccba') == '4abcabcba'
+p crunch('ggggggggggggggg') == 'g'
+p crunch('a') == 'a'
+p crunch('') == ''
+

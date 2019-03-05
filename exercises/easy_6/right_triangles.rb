@@ -55,3 +55,11 @@ def triangle(num)
     stars += 1
   end
 end
+
+def triangle(side_length)
+  star_str = '*'
+  side_length.times do
+    puts star_str.rjust(side_length)
+    star_str += '*'
+  end
+end

@@ -7,6 +7,11 @@ def center_of(str)
   results.join
 end
 
+def center_of(str)
+  midpoint = str.size / 2
+  str.size.odd? ? str[midpoint] : str[midpoint - 1, 2]
+end
+
 puts center_of('I love ruby') == 'e'
 puts center_of('Launch School') == ' '
 puts center_of('Launch') == 'un'

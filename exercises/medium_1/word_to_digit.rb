@@ -14,7 +14,7 @@ WORDS_TO_INTS = {
 def word_to_digit(sentence)
   sentence = sentence.dup
   WORDS_TO_INTS.keys.each do |word|
-    sentence.gsub!(word, WORDS_TO_INTS)
+    sentence.gsub!(/\b#{word}\b/, WORDS_TO_INTS)
   end
   sentence
 end

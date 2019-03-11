@@ -1,4 +1,4 @@
-WORD_TO_DIGIT_STR = {
+WORDS_TO_INTS = {
   'zero' => 0,  
   'one' => 1,  
   'two' => 2,  
@@ -13,8 +13,8 @@ WORD_TO_DIGIT_STR = {
 
 def word_to_digit(sentence)
   sentence = sentence.dup
-  WORD_TO_DIGIT_STR.keys.each do |word|
-    sentence.gsub!(word, WORD_TO_DIGIT_STR)
+  WORDS_TO_INTS.keys.each do |word|
+    sentence.gsub!(word, WORDS_TO_INTS)
   end
   sentence
 end

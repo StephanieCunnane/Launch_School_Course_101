@@ -46,3 +46,25 @@ end
 
 p toggle_lights(10)
 
+# My second solution
+def initialize_lights(n)
+  (1..n).each_with_object({}) do |key, lights|
+    lights[key] = false
+  end
+end
+
+def toggle_lights(n)
+  lights = initialize_lights(n)
+
+  (1..n).each do |divisor|
+    (1..n).each do |inner_idx|
+      lights[inner_idx] = !lights[inner_idx] if inner_idx % divisor == 0
+    end
+  end
+
+  lights.select { |_switch, is_on| is_on }.keys
+end
+
+p toggle_lights(5) == [1, 4]
+p toggle_lights(10) == [1, 4, 9]
+p toggle_lights(1000) 

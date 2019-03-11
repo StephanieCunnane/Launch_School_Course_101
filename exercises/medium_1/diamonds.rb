@@ -30,6 +30,21 @@ end
 print_hollow_diamond(1)
 print_hollow_diamond(9)
 
+def hollow_diamond(n)
+  star_multipliers = [*1..n].concat((n - 1).downto(1).to_a).select(&:odd?)
+
+  star_multipliers.each do |multiplier|
+    if multiplier < 3
+      star_str = ('*' * multiplier).center(n)
+    else
+      star_str = "*#{' ' * (multiplier - 2)}*".center(n)
+    end
+    puts star_str
+  end
+end
+
+hollow_diamond(9)
+
 # Given solution
 def print_row(grid_size, distance_from_center)
   number_of_stars = grid_size - 2 * distance_from_center

@@ -16,6 +16,19 @@ def block_word?(word)
   true
 end
 
+BLOCKS = Hash['b', 'o', 'o', 'b', 'g', 't', 't', 'g', 'v', 'i', 'i', 'v', 'x', 'k', 'k', 'x', 'r', 'e', 'e', 'r', 'l', 'y', 'y', 'l', 'd', 'q', 'q', 'd', 'f', 's', 's', 'f', 'z', 'm', 'm', 'z', 'c', 'p', 'p', 'c', 'j', 'w', 'w', 'j', 'n', 'a', 'a', 'n', 'h', 'u', 'u', 'h'].freeze
+
+def block_word?(word)
+  word = word.downcase
+  available_letters = ('a'..'z').to_a
+
+  word.each_char do |char|
+    return false unless available_letters.include?(char) && available_letters.include?(BLOCKS[char])
+    available_letters.delete(char).delete(BLOCKS[char])
+  end
+  true
+end
+
 # Given solution
 BLOCKS = %w(BO XK DQ CP NA GT RE FS JW HU VI LY ZM).freeze
 

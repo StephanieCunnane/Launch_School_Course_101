@@ -13,12 +13,25 @@ def fibonacci(nth)
   current_fibonacci
 end
 
-# Given solution
 def fibonacci(nth)
-  first, last = [1, 1]
-  3.upto(nth) { first, last = [last, first + last] }
-  last
+  first = 1
+  second = 1
+  current_fibonacci = 2
+
+  (nth - 2).times do
+    current_fibonacci = first + second
+    first = second
+    second = current_fibonacci
+  end
+  current_fibonacci
 end
+
+# Given solution
+#def fibonacci(nth)
+#  first, last = [1, 1]
+#  3.upto(nth) { first, last = [last, first + last] }
+#  last
+#end
 
 puts fibonacci(20) == 6765
 puts fibonacci(100) == 354224848179261915075
